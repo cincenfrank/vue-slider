@@ -17,8 +17,8 @@
 <body>
     <header></header>
     <main id="vueApp">
-        <div class="container">
-            <div class="row g-0">
+        <div class="container my-5">
+            <div class="row g-0" @mouseover="blockAutoplay">
                 <div class="col-10">
                     <div class="image_container w-100 h-100 position-relative">
                         <div class="main_image position-absolute top-0 end-0 bottom-0 start-0"
@@ -31,11 +31,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-2 position-relative">
+
+
                     <div class="preview_image" :class="activeImageIndex===i ? 'active' : '' "
                         v-for="image,i in imagesArray">
                         <img class=" w-100 h-100" :src="image.url" :alt="`image number ${i+1}`">
                     </div>
+                    <div class="forward_button " @click="onPreviousPressed">
+                        &uparrow;</div>
+                    <div class="previous_button " @click="onForwardPressed">
+                        &downarrow;</div>
                 </div>
             </div>
         </div>

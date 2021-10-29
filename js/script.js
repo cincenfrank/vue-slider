@@ -4,6 +4,7 @@ window.addEventListener("DOMContentLoaded", () => {
     el: "#vueApp",
     data: {
       activeImageIndex: 0,
+      intervalId: "",
       imagesArray: [
         {
           url: "img/01.jpg",
@@ -36,6 +37,35 @@ window.addEventListener("DOMContentLoaded", () => {
         },
       ],
     },
-    methods: {},
+    methods: {
+      onForwardPressed() {
+        this.activeImageIndex =
+          this.activeImageIndex === this.imagesArray.length - 1
+            ? 0
+            : ++this.activeImageIndex;
+      },
+      onPreviousPressed() {
+        this.activeImageIndex =
+          this.activeImageIndex === 0
+            ? this.imagesArray.length - 1
+            : --this.activeImageIndex;
+      },
+      blockAutoplay() {
+        if (this.intervalId != "") {
+          clearInterval(this.intervalId);
+          this.intervalId = "";
+        }
+      },
+      startAutoplay() {
+        this.intervalId = setInterval(() => {
+          onForwardPressed();
+        }, 3000);
+      },
+    },
+    mounted() {
+      this.intervalId = setInterval(() => {
+        this.onForwardPressed();
+      }, 3000);
+    },
   });
 });
