@@ -58,14 +58,34 @@ window.addEventListener("DOMContentLoaded", () => {
       },
       startAutoplay() {
         this.intervalId = setInterval(() => {
-          onForwardPressed();
+          this.onForwardPressed();
         }, 3000);
+      },
+      /**
+       *
+       * @param {KeyboardEvent} event
+       */
+      keyUpHandler(event) {
+        if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
+          this.onPreviousPressed();
+        } else if (event.key === "ArrowDown" || event.key === "ArrowRight") {
+          this.onForwardPressed();
+        }
       },
     },
     mounted() {
-      this.intervalId = setInterval(() => {
-        this.onForwardPressed();
-      }, 3000);
+      // this.intervalId = setInterval(() => {
+      //   this.onForwardPressed();
+      // }, 3000);
+      this.startAutoplay();
+    },
+    created() {
+      // window.addEventListener("keydown", this.onForwardPressed);
+      window.addEventListener("keyup", this.keyUpHandler);
+    },
+    destroyed() {
+      // window.removeEventListener("keydown", this.onForwardPressed);
+      window.removeEventListener("keyup", this.keyUpHandler);
     },
   });
 });
